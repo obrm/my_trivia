@@ -3,9 +3,13 @@ import 'package:my_trivia/providers/game_page_provider.dart';
 import 'package:provider/provider.dart';
 
 class GamePage extends StatelessWidget {
+  final String difficultyLevel;
+
   double? deviceHeight, deviceWidth;
 
   GamePageProvider? pageProvider;
+
+  GamePage({required this.difficultyLevel});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +18,7 @@ class GamePage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => GamePageProvider(
         context: context,
+        difficultyLevel: difficultyLevel,
       ),
       child: _buildUI(),
     );
@@ -73,7 +78,9 @@ class GamePage extends StatelessWidget {
 
   Widget _trueButton() {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: () {
+        pageProvider!.answerQuestion("True");
+      },
       color: Colors.green,
       minWidth: deviceHeight! * 0.8,
       height: deviceHeight! * 0.1,
@@ -89,7 +96,9 @@ class GamePage extends StatelessWidget {
 
   Widget _falseButton() {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: () {
+        pageProvider!.answerQuestion("False");
+      },
       color: Colors.red,
       minWidth: deviceHeight! * 0.8,
       height: deviceHeight! * 0.1,
