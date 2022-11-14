@@ -22,16 +22,23 @@ class GamePage extends StatelessWidget {
   Widget _buildUI() {
     return Builder(builder: (context) {
       pageProvider = context.watch<GamePageProvider>();
-      return Scaffold(
-        body: SafeArea(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: deviceHeight! * 0.05,
+      if (pageProvider!.questions != null) {
+        return Scaffold(
+          body: SafeArea(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: deviceHeight! * 0.05,
+              ),
+              child: _gameUI(),
             ),
-            child: _gameUI(),
           ),
-        ),
-      );
+        );
+      } else {
+        return const Center(
+            child: CircularProgressIndicator(
+          color: Colors.white,
+        ));
+      }
     });
   }
 
@@ -56,8 +63,8 @@ class GamePage extends StatelessWidget {
   }
 
   Widget _questionText() {
-    return const Text("Test",
-        style: TextStyle(
+    return Text(pageProvider!.getCurrentQuestion(),
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 25,
           fontWeight: FontWeight.w400,
